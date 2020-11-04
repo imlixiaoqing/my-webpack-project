@@ -1,3 +1,5 @@
+require("@babel/polyfill");
+
 import _ from 'lodash';
 import printMe from './print.js';
 

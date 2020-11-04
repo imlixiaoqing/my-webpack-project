@@ -1,6 +1,7 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const webpack = require('webpack')
 
 module.exports = {
 
@@ -16,10 +17,31 @@ module.exports = {
   devServer: {
     contentBase:  './dist',
     // open: true,
-    // port: '8000',
+    port: '8080',
+    hot: true,
+    hotOnly: true
     // proxy: {
     //   // 'api': 'http://localhost:3000/'
     // }
+  },
+  module: {
+    rules: [
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        loader: "babel-loader",
+        options: {
+          "presets": [
+            ["@babel/preset-env", {
+              target: {
+                chrome: '67'
+              },
+              "useBuiltIns": 'usage'
+            }]
+          ]
+        }
+      }
+    ]
   },
   plugins: [
     new CleanWebpackPlugin({
@@ -29,6 +51,7 @@ module.exports = {
       title: 'Output 122',
       // template: 'src/index.html'
     }),
+    new webpack.HotModuleReplacementPlugin()
   ],
 
   
